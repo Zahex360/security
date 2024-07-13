@@ -16,40 +16,57 @@
         max-width: 1200px;
         margin: 0 auto;
         padding: 40px 20px;
+        text-align: center;
       }
-      .content {
+      .carousel {
         display: flex;
-        justify-content: space-between;
-        gap: 20px;
+        overflow: hidden;
+        justify-content: center;
+        position: relative;
       }
-      .box {
+      .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+      .carousel-item {
+        min-width: 30%;
+        margin: 0 10px;
         background: white;
         border: 1px solid #ddd;
         border-radius: 10px;
-        width: 30%;
-        text-align: center;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
         cursor: pointer;
       }
-      .box:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-      }
-      .box img {
+      .carousel-item img {
         width: 100%;
         height: auto;
         border-bottom: 1px solid #ddd;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
       }
-      .box p {
+      .carousel-item p {
         padding: 20px;
         font-size: 1.2em;
         margin: 0;
       }
+      .carousel-button {
+        background: none;
+        border: none;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2em;
+        cursor: pointer;
+        z-index: 1;
+      }
+      .carousel-button-left {
+        left: 10px;
+      }
+      .carousel-button-right {
+        right: 10px;
+      }
       .footer {
-        text-align: center;
         margin-top: 40px;
         font-size: 1em;
         background: white;
@@ -65,58 +82,62 @@
       .footer a:hover {
         text-decoration: underline;
       }
-      /* Modal Styles */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-      }
-      .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 600px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-      }
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="content">
-        <div class="box" id="phishingBox">
-          <img src="phishing_email.jpg" alt="Phishing Email" />
-          <p>Phishing Email</p>
+      <div class="carousel">
+        <button
+          class="carousel-button carousel-button-left"
+          onclick="moveLeft()"
+        >
+          &#8249;
+        </button>
+        <div class="carousel-track">
+          <!-- Left elements -->
+          <div class="carousel-item">
+            <img
+              src="cybersecurity_training.jpg"
+              alt="Cybersecurity Training"
+            />
+            <p>Cybersecurity Training</p>
+          </div>
+          <div class="carousel-item">
+            <img src="incident_response.jpg" alt="Incident Response" />
+            <p>Incident Response</p>
+          </div>
+          <!-- Main elements -->
+          <div class="carousel-item">
+            <img src="phishing_email.jpg" alt="Phishing Email" />
+            <p>Phishing Email</p>
+          </div>
+          <div class="carousel-item">
+            <img src="data_protection.png" alt="Data Protection" />
+            <p>Data Protection</p>
+          </div>
+          <div class="carousel-item">
+            <img src="network_security.png" alt="Network Security" />
+            <p>Network Security</p>
+          </div>
+          <div class="carousel-item">
+            <img src="cybersecurity_policy.png" alt="Cybersecurity Policy" />
+            <p>Cybersecurity Policy</p>
+          </div>
+          <div class="carousel-item">
+            <img src="firewall.jpg" alt="Firewall" />
+            <p>Firewall</p>
+          </div>
+          <div class="carousel-item">
+            <img src="encryption.jpg" alt="Encryption" />
+            <p>Encryption</p>
+          </div>
         </div>
-        <div class="box" id="dataBox">
-          <img src="data_protection.png" alt="Data Protection" />
-          <p>Data Protection</p>
-        </div>
-        <div class="box" id="networkBox">
-          <img src="network_security.png" alt="Network Security" />
-          <p>Network Security</p>
-        </div>
+        <button
+          class="carousel-button carousel-button-right"
+          onclick="moveRight()"
+        >
+          &#8250;
+        </button>
       </div>
       <div class="footer">
         <p>
@@ -131,100 +152,27 @@
       </div>
     </div>
 
-    <!-- The Modal -->
-    <div id="phishingModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closePhishing">&times;</span>
-        <h2>Phishing Email</h2>
-        <p>
-          Phishing emails are designed to trick you into giving away sensitive
-          information like passwords or credit card numbers. They often appear
-          to come from legitimate sources, such as your bank or a trusted
-          company.
-        </p>
-      </div>
-    </div>
-
-    <div id="dataModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeData">&times;</span>
-        <h2>Data Protection</h2>
-        <p>
-          Data protection involves safeguarding important information from
-          corruption, compromise, or loss. It includes measures like encryption,
-          backups, and secure access controls to ensure that data remains safe
-          and secure.
-        </p>
-      </div>
-    </div>
-
-    <div id="networkModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeNetwork">&times;</span>
-        <h2>Network Security</h2>
-        <p>
-          Network security involves measures to protect the integrity,
-          confidentiality, and accessibility of computer networks. It includes
-          practices such as firewalls, intrusion detection systems, and secure
-          network protocols.
-        </p>
-      </div>
-    </div>
-
     <script>
-      // Get the modal elements
-      var phishingModal = document.getElementById("phishingModal");
-      var dataModal = document.getElementById("dataModal");
-      var networkModal = document.getElementById("networkModal");
+      const track = document.querySelector(".carousel-track");
+      const items = Array.from(track.children);
+      const itemWidth = items[0].getBoundingClientRect().width + 20; // Including margin
+      let currentIndex = 0;
 
-      // Get the button elements
-      var phishingBox = document.getElementById("phishingBox");
-      var dataBox = document.getElementById("dataBox");
-      var networkBox = document.getElementById("networkBox");
-
-      // Get the <span> elements that close the modals
-      var closePhishing = document.getElementById("closePhishing");
-      var closeData = document.getElementById("closeData");
-      var closeNetwork = document.getElementById("closeNetwork");
-
-      // When the user clicks the box, open the modal
-      phishingBox.onclick = function () {
-        phishingModal.style.display = "block";
-      };
-
-      dataBox.onclick = function () {
-        dataModal.style.display = "block";
-      };
-
-      networkBox.onclick = function () {
-        networkModal.style.display = "block";
-      };
-
-      // When the user clicks on <span> (x), close the modal
-      closePhishing.onclick = function () {
-        phishingModal.style.display = "none";
-      };
-
-      closeData.onclick = function () {
-        dataModal.style.display = "none";
-      };
-
-      closeNetwork.onclick = function () {
-        networkModal.style.display = "none";
-      };
-
-      // When the user clicks anywhere outside of the modal, close it
-      window.onclick = function (event) {
-        if (event.target == phishingModal) {
-          phishingModal.style.display = "none";
+      function moveLeft() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          track.style.transform =
+            "translateX(" + -itemWidth * currentIndex + "px)";
         }
-        if (event.target == dataModal) {
-          dataModal.style.display = "none";
+      }
+
+      function moveRight() {
+        if (currentIndex < items.length - 3) {
+          currentIndex++;
+          track.style.transform =
+            "translateX(" + -itemWidth * currentIndex + "px)";
         }
-        if (event.target == networkModal) {
-          networkModal.style.display = "none";
-        }
-      };
+      }
     </script>
   </body>
 </html>
